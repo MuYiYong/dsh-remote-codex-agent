@@ -21,7 +21,7 @@ test('basename handles trailing slashes and Windows separators', () => {
 test('parses panes, codex processes and sessions', () => {
   const updatedAt = Math.floor(Date.now() / 1000) - 60
   const output = discoveryOutput([
-    tLine({ paneTitle: 'project', paneId: '%4', sessionName: 'oinx', windowIndex: 1, paneIndex: 2 }),
+    tLine({ paneTitle: 'project', paneId: '%4', sessionName: 'demo', windowIndex: 1, paneIndex: 2 }),
     pLine({ paneId: '%4', cwd: '/home/me/project' }),
     sLine({ id: 'thread-1', title: 'Fix login', cwd: '/home/me/project', updatedAt, rolloutPath: '/x/rollout.jsonl', mtime: updatedAt + 30 }),
   ])

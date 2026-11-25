@@ -97,7 +97,7 @@ type SessionView = {
     paneTitle: string
     windowName: string
     matchedBy: 'title' | 'process' | 'title+process'
-    target: string                // e.g. "oinx:0.1"
+    target: string                // e.g. "demo:0.1"
   }
   command: string | null          // ready-to-copy SSH attach command
   commandKind: 'pane' | 'session' | null
@@ -114,7 +114,7 @@ Layout: a scrollable management page that fills the main column, matching the lo
 - Sidebar: known status changes for the same session latch `Codex Agent · Updated` while the main panel is closed. Mounting the main panel acknowledges the changes. The first snapshot, a new display window, network failure and unknown/unreachable observations do not themselves trigger the indicator.
 - Server sections in response order. First-level heading = server `name`; right side shows status: 在线 / SSH 不可达 / 检测中, with color + icon together (not color only). Unreachable servers still render their cached sessions, all marked unreachable. Show `error` as a muted line under the heading for unreachable servers. Show `tmuxError` as a warning line (“tmux 枚举失败，定位与复制命令不可用”). Show first `warnings[]` item as a muted warning line (e.g. “sqlite3 不可用，已回退到 rollout 文件”).
 - Empty server (no sessions): keep the heading and show “近 N 天无活动会话”.
-- Session rows, sorted as received. Leftmost column is the status marker; then title (bold), then meta row: relative activity time (refresh via a 30s local tick), cwd, tmux location (`oinx:0.1` / pane title) or “未定位到运行终端”; then the copy button at the right. For `blocked`, add a second line with kind-specific label (等待批准 / 等待回答 / 等待登录 / 需要处理) and the decoded message. For `unknown` + `hint === 'no-osc'`, add muted hint “该会话无法通过原生状态通道监控”; for `unlocated`, hint “未定位到运行终端”. For `done`, show a check glyph; for `unreachable`, grey ✕ on every row of that server.
+- Session rows, sorted as received. Leftmost column is the status marker; then title (bold), then meta row: relative activity time (refresh via a 30s local tick), cwd, tmux location (`demo:0.1` / pane title) or “未定位到运行终端”; then the copy button at the right. For `blocked`, add a second line with kind-specific label (等待批准 / 等待回答 / 等待登录 / 需要处理) and the decoded message. For `unknown` + `hint === 'no-osc'`, add muted hint “该会话无法通过原生状态通道监控”; for `unlocated`, hint “未定位到运行终端”. For `done`, show a check glyph; for `unreachable`, grey ✕ on every row of that server.
 - Status marker: inline SVG (not emoji), 14–16 px, with `aria-label`/`title` localized text; shapes/colors: working = filled circle success token; blocked = filled circle warn token; idle = hollow circle idle token; done = check idle token; error = filled circle error token; unknown = question glyph idle/muted; unreachable = ✕ muted. Do not animate status transitions.
 - Copy button: label 复制连接命令 / 已复制 (2s transient feedback, no toast library). Use `navigator.clipboard.writeText(command)`. If unavailable or rejected, keep the button enabled but beneath/next to it render the command as a selectable `<code>` text (`user-select: text`, wrap, monospace) so the user can manually copy; show a short “复制失败，请手动选择命令” note. Disable the button only when `command === null`, with title/aria-label “未定位到运行终端”.
 - Use `session.command` verbatim for copying only. When `canOpenITerm` is true, show View / 查看 with a separate icon-only copy button.

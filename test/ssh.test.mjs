@@ -21,12 +21,12 @@ function installFakeSsh(directory) {
 }
 
 test('buildSshArgs reuses BatchMode and the configured alias', () => {
-  const args = buildSshArgs({ ssh: 'prod-ubuntu', port: null }, ['bash', '-ls'])
+  const args = buildSshArgs({ ssh: 'demo-host', port: null }, ['bash', '-ls'])
   assert.ok(args.includes('-o'))
   assert.ok(args.includes('BatchMode=yes'))
   assert.equal(args[args.length - 1], '-ls')
   assert.equal(args[args.length - 2], 'bash')
-  assert.equal(args[args.length - 3], 'prod-ubuntu')
+  assert.equal(args[args.length - 3], 'demo-host')
   assert.equal(args.includes('-p'), false)
 
   const withPort = buildSshArgs({ ssh: 'me@host', port: 2222 }, ['bash', '-ls'])

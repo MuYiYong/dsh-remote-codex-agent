@@ -3,7 +3,7 @@ import test from 'node:test'
 import { Monitor } from '../lib/monitor.js'
 import { b64, discoveryOutput, sLine, tLine } from './helpers.mjs'
 
-const SERVER = { id: 'srv_1', name: 'prod', ssh: 'prod', port: null }
+const SERVER = { id: 'srv_1', name: 'demo', ssh: 'demo', port: null }
 
 /** Build a mutable settings store stub. */
 function createStore(settings = { servers: [SERVER], days: 3, pollMs: 2000 }) {
@@ -53,7 +53,7 @@ function locatedDiscovery(options = {}) {
   const sessionId = options.sessionId ?? 'thread-1'
   const title = options.title ?? 'Fix login flow'
   return discoveryOutput([
-    tLine({ paneTitle: title, paneId: '%7', sessionName: 'oinx', windowIndex: 0, paneIndex: 1 }),
+    tLine({ paneTitle: title, paneId: '%7', sessionName: 'demo', windowIndex: 0, paneIndex: 1 }),
     sLine({ id: sessionId, title, cwd: '/home/me/project', updatedAt: now, rolloutPath: '/home/me/rollout.jsonl' }),
   ])
 }
@@ -78,7 +78,7 @@ test('a successful poll locates sessions and produces an unknown state until OSC
   assert.equal(session.status, 'unknown')
   assert.equal(session.hint, 'no-osc')
   assert.equal(session.location.paneId, '%7')
-  assert.equal(session.command, 'ssh -t prod "tmux attach -t oinx:0.1"'.replace(':0.1', ':0 \\; select-pane -t oinx:0.1'))
+  assert.equal(session.command, 'ssh -t demo "tmux attach -t demo:0.1"'.replace(':0.1', ':0 \\; select-pane -t demo:0.1'))
   assert.equal(session.commandKind, 'pane')
   assert.equal(ssh.streams.length, 1)
   assert.match(ssh.streams[0].script, /pipe-pane -O/)
@@ -107,11 +107,11 @@ test('OSC 7501 events update the session state table immediately', async () => {
 test('state does not follow a session that moves to a pane without OSC data', async () => {
   const now = Math.floor(Date.now() / 1000)
   const first = discoveryOutput([
-    tLine({ paneTitle: 'Fix login flow', paneId: '%1', sessionName: 'oinx', windowIndex: 0, paneIndex: 0 }),
+    tLine({ paneTitle: 'Fix login flow', paneId: '%1', sessionName: 'demo', windowIndex: 0, paneIndex: 0 }),
     sLine({ id: 'thread-1', title: 'Fix login flow', cwd: '/home/me/project', updatedAt: now }),
   ])
   const second = discoveryOutput([
-    tLine({ paneTitle: 'Fix login flow', paneId: '%2', sessionName: 'oinx', windowIndex: 1, paneIndex: 0 }),
+    tLine({ paneTitle: 'Fix login flow', paneId: '%2', sessionName: 'demo', windowIndex: 1, paneIndex: 0 }),
     sLine({ id: 'thread-1', title: 'Fix login flow', cwd: '/home/me/project', updatedAt: now + 1 }),
   ])
   const { monitor, ssh } = createMonitor({ code: 0, stdout: first })
@@ -172,7 +172,7 @@ test('non-codex OSC and malformed sequences do not change state', async () => {
   monitor.dispose()
 })
 
-const CONNECTION_REFUSED = { code: 255, stderr: 'ssh: connect to host prod port 22: Connection refused' }
+const CONNECTION_REFUSED = { code: 255, stderr: 'ssh: connect to host demo port 22: Connection refused' }
 
 test('a single SSH failure preserves live state; a full poll clears the warning and failure streak', async () => {
   const discovery = { code: 0, stdout: locatedDiscovery() }

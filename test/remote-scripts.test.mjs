@@ -21,7 +21,7 @@ function installFakeTmux(binDirectory, title) {
   const script = `#!/bin/sh
 if [ "$1" = "list-sessions" ]; then exit 0; fi
 if [ "$1" = "list-panes" ]; then
-  printf 'oinx\\0370\\0371\\037%s\\037123456\\037zsh\\037$1\\037%%7\\0371\\037node\\n' '${title}'
+  printf 'demo\\0370\\0371\\037%s\\037123456\\037zsh\\037$1\\037%%7\\0371\\037node\\n' '${title}'
   exit 0
 fi
 exit 1
@@ -216,10 +216,10 @@ test('capture script names a per-pane FIFO and guards pipe-pane with -o', () => 
 })
 
 test('fifoHash is stable and server-specific', () => {
-  const first = fifoHash({ id: 'srv_a', ssh: 'prod', port: null }, '%1')
-  const second = fifoHash({ id: 'srv_a', ssh: 'prod', port: null }, '%1')
-  const other = fifoHash({ id: 'srv_a', ssh: 'prod', port: 2222 }, '%1')
-  const sameTarget = fifoHash({ id: 'srv_b', ssh: 'prod', port: null }, '%1')
+  const first = fifoHash({ id: 'srv_a', ssh: 'demo', port: null }, '%1')
+  const second = fifoHash({ id: 'srv_a', ssh: 'demo', port: null }, '%1')
+  const other = fifoHash({ id: 'srv_a', ssh: 'demo', port: 2222 }, '%1')
+  const sameTarget = fifoHash({ id: 'srv_b', ssh: 'demo', port: null }, '%1')
   assert.equal(first, second)
   assert.notEqual(first, other)
   assert.notEqual(first, sameTarget)

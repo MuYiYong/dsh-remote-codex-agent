@@ -6,7 +6,7 @@ import { locateSessions, scorePaneMatch } from '../lib/locate.js'
 function pane(overrides = {}) {
   return {
     paneId: '%1',
-    sessionName: 'oinx',
+    sessionName: 'demo',
     windowIndex: 0,
     paneIndex: 1,
     paneTitle: '',
@@ -76,7 +76,7 @@ test('locateSessions assigns one pane per session and one session per pane', () 
   const located = locateSessions(sessions, panes)
   assert.equal(located.get('a').location.paneId, '%1')
   assert.equal(located.get('b').location.paneId, '%2')
-  assert.equal(located.get('a').location.target, 'oinx:0.1')
+  assert.equal(located.get('a').location.target, 'demo:0.1')
 })
 
 test('locateSessions leaves unmatched sessions unlocated', () => {
@@ -96,31 +96,31 @@ test('locateSessions prefers the strongest match when two sessions compete for o
 })
 
 test('builds the pane-precise attach command exactly as specified', () => {
-  const { command, commandKind } = buildAttachCommand({ ssh: 'prod-ubuntu', port: null }, {
-    sessionName: 'oinx', windowIndex: 0, paneIndex: 1,
+  const { command, commandKind } = buildAttachCommand({ ssh: 'demo-host', port: null }, {
+    sessionName: 'demo', windowIndex: 0, paneIndex: 1,
   })
-  assert.equal(command, 'ssh -t prod-ubuntu "tmux attach -t oinx:0 \\; select-pane -t oinx:0.1"')
+  assert.equal(command, 'ssh -t demo-host "tmux attach -t demo:0 \\; select-pane -t demo:0.1"')
   assert.equal(commandKind, 'pane')
 })
 
 test('degrades to a session attach command and includes a configured port', () => {
   const { command, commandKind } = buildAttachCommand({ ssh: 'me@example.com', port: 2222 }, {
-    sessionName: 'oinx', windowIndex: null, paneIndex: null,
+    sessionName: 'demo', windowIndex: null, paneIndex: null,
   })
-  assert.equal(command, 'ssh -t -p 2222 me@example.com "tmux attach -t oinx"')
+  assert.equal(command, 'ssh -t -p 2222 me@example.com "tmux attach -t demo"')
   assert.equal(commandKind, 'session')
 })
 
 test('returns no command without a tmux session', () => {
-  assert.deepEqual(buildAttachCommand({ ssh: 'prod', port: null }, null), { command: null, commandKind: null })
-  assert.deepEqual(buildAttachCommand({ ssh: 'prod', port: null }, { sessionName: '' }), { command: null, commandKind: null })
+  assert.deepEqual(buildAttachCommand({ ssh: 'demo', port: null }, null), { command: null, commandKind: null })
+  assert.deepEqual(buildAttachCommand({ ssh: 'demo', port: null }, { sessionName: '' }), { command: null, commandKind: null })
 })
 
 test('escapes shell-significant characters inside the quoted tmux command', () => {
-  const { command } = buildAttachCommand({ ssh: 'prod', port: null }, {
+  const { command } = buildAttachCommand({ ssh: 'demo', port: null }, {
     sessionName: 'we"ird$name', windowIndex: 2, paneIndex: 0,
   })
-  assert.equal(command, 'ssh -t prod "tmux attach -t we\\"ird\\$name:2 \\; select-pane -t we\\"ird\\$name:2.0"')
+  assert.equal(command, 'ssh -t demo "tmux attach -t we\\"ird\\$name:2 \\; select-pane -t we\\"ird\\$name:2.0"')
   assert.equal(escapeDoubleQuoted('a`b\\c'), 'a\\`b\\\\c')
   assert.equal(escapeDoubleQuoted('run!now'), 'run\\!now')
   assert.equal(sshPrefix({ ssh: 'x', port: null }), 'ssh -t x')

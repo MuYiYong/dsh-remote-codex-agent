@@ -13,7 +13,7 @@ export function hex(value) {
 /** Build one tmux pane record. */
 export function tLine(options = {}) {
   const {
-    sessionName = 'oinx', windowIndex = 0, paneIndex = 0, paneTitle = '',
+    sessionName = 'demo', windowIndex = 0, paneIndex = 0, paneTitle = '',
     panePid = 100, windowName = 'zsh', sessionId = '$1', paneId = '%1',
     active = 1, currentCommand = 'node',
   } = options

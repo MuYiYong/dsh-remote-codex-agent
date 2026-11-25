@@ -29,7 +29,7 @@ test('defaults are empty servers, three days and two seconds', () => {
 test('normalizes valid settings and assigns stable ids', () => {
   const { settings, errors } = normalizeSettings({
     servers: [
-      { name: 'Prod', ssh: 'prod-ubuntu', port: 2222 },
+      { name: 'Demo', ssh: 'demo-host', port: 2222 },
       { name: 'Staging', ssh: 'me@staging.example.com' },
     ],
     days: 7,
@@ -92,7 +92,7 @@ test('SettingsStore persists, reloads, and honors defaults', () => {
     const store = new SettingsStore(file)
     assert.deepEqual(store.get(), defaultSettings())
     const saved = store.update({
-      servers: [{ name: 'Prod', ssh: 'prod-ubuntu', port: null }],
+      servers: [{ name: 'Demo', ssh: 'demo-host', port: null }],
       days: 5,
       pollMs: 3000,
     })
@@ -103,7 +103,7 @@ test('SettingsStore persists, reloads, and honors defaults', () => {
 
     const reloaded = new SettingsStore(file)
     assert.equal(reloaded.get().servers.length, 1)
-    assert.equal(reloaded.get().servers[0].name, 'Prod')
+    assert.equal(reloaded.get().servers[0].name, 'Demo')
     assert.equal(reloaded.get().days, 5)
     assert.equal(reloaded.get().pollMs, 3000)
   } finally {
