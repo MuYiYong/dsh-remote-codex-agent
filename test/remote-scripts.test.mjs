@@ -176,21 +176,26 @@ test('discovery script stays alive when tmux is missing and sessions are absent'
     mkdirSync(codexHome, { recursive: true })
     mkdirSync(bin, { recursive: true })
     mkdirSync(tmp, { recursive: true })
-    // A PATH with no tmux and no sqlite3 or real tools is unnecessary; hide tmux
-    // only by pointing PATH at the empty bin plus the standard system paths
-    // through a wrapper that does not contain tmux. Use /usr/bin:/bin on macOS,
-    // which has no tmux, and keep our fake bin first.
+    // Keep only the fake bin plus the standard system paths. Some Linux images
+    // ship tmux in /usr/bin, so assert the missing-tmux warning only when the
+    // chosen PATH really cannot resolve tmux; the run must stay graceful either
+    // way (the macOS job covers the missing-tmux branch).
+    const PATH = `${bin}:/usr/bin:/bin`
+    const tmuxVisible = spawnSync('bash', ['-c', 'command -v tmux'], {
+      env: { ...process.env, PATH },
+      encoding: 'utf8',
+    }).status === 0
     const result = runDiscovery(discoveryScript({ days: 3 }), {
       HOME: home,
       CODEX_HOME: codexHome,
       TMPDIR: tmp,
-      PATH: `${bin}:/usr/bin:/bin`,
+      PATH,
     })
     assert.equal(result.status, 0)
     const parsed = parseDiscoveryOutput(result.stdout)
     assert.equal(parsed.complete, true)
     assert.equal(parsed.sessions.length, 0)
-    assert.ok(parsed.warnings.some(warning => warning.area === 'tmux'))
+    if (!tmuxVisible) assert.ok(parsed.warnings.some(warning => warning.area === 'tmux'))
   } finally {
     rmSync(directory, { recursive: true, force: true })
   }
