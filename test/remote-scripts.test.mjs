@@ -8,7 +8,7 @@ import { parseDiscoveryOutput } from '../lib/discovery-parse.js'
 import { captureScript, discoveryScript, fifoHash } from '../lib/remote-scripts.js'
 
 function temporaryDirectory() {
-  return mkdtempSync(join(tmpdir(), 'dsh-codex-agent-script-'))
+  return mkdtempSync(join(tmpdir(), 'dsh-remote-codex-agent-script-'))
 }
 
 /**

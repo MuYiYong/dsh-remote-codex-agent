@@ -1,6 +1,6 @@
 {
-  "name": "dsh-codex-agent",
-  "version": "0.1.1",
+  "name": "dsh-remote-codex-agent",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Monitor and interact with Codex CLI sessions on remote servers from a DSH sidebar panel: tmux discovery, live status, and an interactive iTerm2 view.",
@@ -39,10 +39,10 @@
   },
   "author": "MuYiYong",
   "license": "MIT",
-  "homepage": "https://github.com/MuYiYong/dsh-remote-codex-monitor",
+  "homepage": "https://github.com/MuYiYong/dsh-remote-codex-agent",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MuYiYong/dsh-remote-codex-monitor.git"
+    "url": "https://github.com/MuYiYong/dsh-remote-codex-agent.git"
   },
   "engines": {
     "dsh": "^0.2.2-rc.5"

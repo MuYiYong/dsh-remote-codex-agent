@@ -9,7 +9,7 @@ import { discoveryScript } from '../lib/remote-scripts.js'
 import { parseDiscoveryOutput } from '../lib/discovery-parse.js'
 
 function temporaryDirectory() {
-  return mkdtempSync(join(tmpdir(), 'dsh-codex-agent-ssh-'))
+  return mkdtempSync(join(tmpdir(), 'dsh-remote-codex-agent-ssh-'))
 }
 
 /** Create a fake `ssh` that runs a local login bash instead of connecting. */

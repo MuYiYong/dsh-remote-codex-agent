@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Remote discovery for dsh-codex-agent. Read-only: no Codex files are modified.
+# Remote discovery for dsh-remote-codex-agent. Read-only: no Codex files are modified.
 # Emitted records (pipe-delimited). T/P/J free text is base64; S/U free text is
 # SQLite hex() because SQL cannot base64-encode:
 #   DSH1
@@ -21,9 +21,9 @@ if [ "$DSH_DAYS" -gt 30 ]; then DSH_DAYS=30; fi
 DSH_WINDOW=$((DSH_DAYS * 86400))
 CODEX_HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
 
-BASE="${TMPDIR:-/tmp}/dsh-codex-agent"
+BASE="${TMPDIR:-/tmp}/dsh-remote-codex-agent"
 mkdir -p "$BASE" 2>/dev/null || {
-  BASE="$HOME/.dsh-codex-agent"
+  BASE="$HOME/.dsh-remote-codex-agent"
   mkdir -p "$BASE" 2>/dev/null || BASE="/tmp"
 }
 TMP="$BASE/discover.$$"

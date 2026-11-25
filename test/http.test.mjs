@@ -67,7 +67,7 @@ async function json(response) {
 }
 
 test('registers the six authenticated API routes', async () => {
-  const directory = mkdtempSync(join(tmpdir(), 'dsh-codex-agent-http-'))
+  const directory = mkdtempSync(join(tmpdir(), 'dsh-remote-codex-agent-http-'))
   const previousHome = process.env.DSH_HOME
   process.env.DSH_HOME = directory
   const harness = createHarness()
@@ -100,7 +100,7 @@ test('registers the six authenticated API routes', async () => {
 })
 
 test('serves defaults, saves valid settings and rejects invalid ones', async () => {
-  const directory = mkdtempSync(join(tmpdir(), 'dsh-codex-agent-http-'))
+  const directory = mkdtempSync(join(tmpdir(), 'dsh-remote-codex-agent-http-'))
   const previousHome = process.env.DSH_HOME
   process.env.DSH_HOME = directory
   const harness = createHarness()
@@ -154,7 +154,7 @@ test('serves defaults, saves valid settings and rejects invalid ones', async () 
 })
 
 test('sessions and servers routes return structured snapshots with day filtering', async () => {
-  const directory = mkdtempSync(join(tmpdir(), 'dsh-codex-agent-http-'))
+  const directory = mkdtempSync(join(tmpdir(), 'dsh-remote-codex-agent-http-'))
   const previousHome = process.env.DSH_HOME
   process.env.DSH_HOME = directory
   const harness = createHarness()
@@ -191,7 +191,7 @@ test('sessions and servers routes return structured snapshots with day filtering
 })
 
 test('session-states validates ids and returns an empty map without servers', async () => {
-  const directory = mkdtempSync(join(tmpdir(), 'dsh-codex-agent-http-'))
+  const directory = mkdtempSync(join(tmpdir(), 'dsh-remote-codex-agent-http-'))
   const previousHome = process.env.DSH_HOME
   process.env.DSH_HOME = directory
   const harness = createHarness()

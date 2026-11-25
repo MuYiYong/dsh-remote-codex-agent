@@ -48,7 +48,7 @@ Codex 会为并行任务创建 `thread_source=subagent` 的子会话。面板默
 ## 已知限制
 
 - 状态通道依赖 tmux 的 `pipe-pane`（建议 tmux >= 3.1，插件用 `#{pane_pipe}` 判断窗格是否已有 pipe）。如果同一窗格已有其他 `pipe-pane` 占用，插件使用 `-o` 不会覆盖它，该会话会保持 `unknown`。
-- 远端 `/tmp` 不可写时，FIFO 会回退到 `~/.dsh-codex-agent-<hash>.fifo`。
+- 远端 `/tmp` 不可写时，FIFO 会回退到 `~/.dsh-remote-codex-agent-<hash>.fifo`。
 - 插件只监控既有 Codex 会话，不启动新会话。
 - 面板每 2 秒（可调）读取 Host 缓存；Host 侧按配置的轮询间隔并行 SSH 刷新各服务器。
 

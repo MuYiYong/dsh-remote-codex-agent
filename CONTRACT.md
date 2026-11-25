@@ -1,4 +1,4 @@
-# dsh-codex-agent — Client half contract (for client.js)
+# dsh-remote-codex-agent — Client half contract (for client.js)
 
 This file is the implementation contract for `client.js` only. The Host half (`index.js`, `lib/`) is implemented separately and must not be edited by the client-half author. Do not change `package.json`, `cordis.patch.yml`, `locale/*.json`, `icon.svg`, or `docs/`.
 
@@ -8,7 +8,7 @@ One file: `client.js`, a browser half in the DSH lazy-CJS format used by the shi
 
 ```js
 window.__ModuleLoader__.load({
-  id: 'dsh-codex-agent',
+  id: 'dsh-remote-codex-agent',
   factory(require) {
     const React = require('react')
     // ... define components ...
@@ -34,7 +34,7 @@ Only `require('react')` may be requested. Do not import any `@deepseek-ai/*` pac
    - `t` for the label: `ctx.locale.bind('codex-agent')`, called at projection time so the label follows locale changes.
 3. Register the settings card:
    - Primary target requested by the spec is `agent-presets.settings`. That slot does not exist in the running DSH 0.2.2-rc.5 profile. At apply time check `ctx.slots.spec && ctx.slots.spec('agent-presets.settings')`; if it exists, register the card there (`id: 'codex-agent'`, `locale: 'codex-agent'`). Regardless, in this version register the card as its own settings page through `ctx.slots.inject('settings.section', ...)` with `id: 'codex-agent'`, `order: 21`, `locale: 'codex-agent'`, label thunk. Both registrations must be effect-owned/disposed correctly; it is acceptable (and expected) that the agent-presets branch does nothing in the current profile.
-4. Use `ctx.effect` or `ctx.slots.inject` for every registration and dispose correctly. Component-local `<style data-plugin="dsh-codex-agent">` elements are fine (or a `<style>` element rendered by a wrapper); never append to `document.body`, never replace the app root, never read another plugin's DOM.
+4. Use `ctx.effect` or `ctx.slots.inject` for every registration and dispose correctly. Component-local `<style data-plugin="dsh-remote-codex-agent">` elements are fine (or a `<style>` element rendered by a wrapper); never append to `document.body`, never replace the app root, never read another plugin's DOM.
 
 ## HTTP API (Host half provides; same origin, authenticated cookie already present)
 
@@ -121,7 +121,7 @@ Layout: a scrollable management page that fills the main column, matching the lo
 - View sends same-origin `POST /api/codex-agent/open-iterm` with `Content-Type: application/json`, `X-DSH-Codex-View: 1` and exactly `{key}`. The Host requires the authenticated local owner and resolves the configured SSH destination and fresh tmux location itself. The action opens an interactive client on the currently selected view of the named session: a tab in the frontmost non-hotkey iTerm2 window when one exists, otherwise a window. It never detaches other clients and uses `-f ignore-size` where supported so the existing session window keeps its size. `{ok:true,mode:'tab'|'window'}` acknowledges tab or window creation, not a successful SSH login. Failure returns `{ok:false,error:{code,message}}`.
 - Keyboard/focus: buttons are real `<button type="button">` with visible focus rings (`outline` using brand token), copy failure text is not hidden behind hover only.
 - Light and dark themes: every color must be a `--dsw-alias-*` token; `color-mix`/opacity is fine. Use `--dsw-alias-bg-base`, `bg-layer-1`, `bg-layer-2`, `border-l1`, `border-l2`, `label-primary`, `label-secondary`, `brand-primary`, `state-success-primary`, `state-warn-primary`, `state-error-primary`, `state-idle-primary`, `specific-sidebar-fill`. No literal colors except inside the sidebar SVG artwork (which may use brand-like tones).
-- Styles: render one `<style data-plugin="dsh-codex-agent">` element at the top of each top-level page/card component (React children) or inside a small wrapper; keep all class names prefixed `dca-`. Unmounting the component removes the style.
+- Styles: render one `<style data-plugin="dsh-remote-codex-agent">` element at the top of each top-level page/card component (React children) or inside a small wrapper; keep all class names prefixed `dca-`. Unmounting the component removes the style.
 
 ## Sidebar icon
 

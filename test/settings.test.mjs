@@ -8,7 +8,7 @@ import {
 } from '../lib/settings-store.js'
 
 function temporaryDirectory() {
-  return mkdtempSync(join(tmpdir(), 'dsh-codex-agent-'))
+  return mkdtempSync(join(tmpdir(), 'dsh-remote-codex-agent-'))
 }
 
 test('resolveSettingsPath honors DSH_HOME', () => {

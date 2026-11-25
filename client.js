@@ -1,5 +1,5 @@
 /**
- * Browser half of dsh-codex-agent.
+ * Browser half of dsh-remote-codex-agent.
  *
  * A sidebar entry plus a main management page that lists Codex CLI sessions
  * discovered on the configured remote servers, and a settings section that
@@ -12,7 +12,7 @@
  */
 
 window.__ModuleLoader__.load({
-  id: 'dsh-codex-agent',
+  id: 'dsh-remote-codex-agent',
   factory(require) {
     const React = require('react')
     const h = React.createElement
@@ -2695,7 +2695,7 @@ window.__ModuleLoader__.load({
 
     /** Shared stylesheet owner; unmount removes the whole rule set. */
     function PluginStyles() {
-      return h('style', { 'data-plugin': 'dsh-codex-agent' }, STYLE_SHEET)
+      return h('style', { 'data-plugin': 'dsh-remote-codex-agent' }, STYLE_SHEET)
     }
 
     /**

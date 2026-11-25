@@ -29,7 +29,7 @@ DSH 插件：在左侧边栏「自动化任务」下方增加 **Codex Agent**，
 ### 手动安装（高级）
 
 ```sh
-git clone https://github.com/MuYiYong/dsh-remote-codex-monitor.git
+git clone https://github.com/MuYiYong/dsh-remote-codex-agent.git
 # 在 DSH 的 插件 → 添加插件 中选择该目录，或使用 profile 的安装入口
 ```
 
@@ -105,12 +105,12 @@ Host 侧测试覆盖发现脚本（本地 sqlite + 假 tmux）、输出解析、
 
    ```sh
    node scripts/add-release.mjs \
-     --name dsh-codex-agent \
+     --name dsh-remote-codex-agent \
      --version 0.2.0 \
-     --git-url https://github.com/MuYiYong/dsh-remote-codex-monitor \
+     --git-url https://github.com/MuYiYong/dsh-remote-codex-agent \
      --commit <完整 40 位 commit>
    npm test
-   git add -A && git commit -m "release: dsh-codex-agent 0.2.0"
+   git add -A && git commit -m "release: dsh-remote-codex-agent 0.2.0"
    git push
    ```
 

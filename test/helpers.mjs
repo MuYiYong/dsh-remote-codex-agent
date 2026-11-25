@@ -1,4 +1,4 @@
-/** Shared fixtures for dsh-codex-agent Host tests. */
+/** Shared fixtures for dsh-remote-codex-agent Host tests. */
 
 /** Base64-encode one transport field. */
 export function b64(value) {

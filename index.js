@@ -1,5 +1,5 @@
 /**
- * Host half of dsh-codex-agent.
+ * Host half of dsh-remote-codex-agent.
  *
  * Owns the SSH polling/capture monitor and exposes its snapshot to the browser
  * half through authenticated `/api/codex-agent/*` Fetch routes. All SSH,
