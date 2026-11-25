@@ -3370,7 +3370,11 @@ window.__ModuleLoader__.load({
       return now
     }
 
-    /** Compare stable status values, not discovery order, timestamps or SSH errors. */
+    /**
+     * Compare stable status values of main agents, not discovery order,
+     * timestamps or SSH errors. Subagent rows are excluded: they churn while a
+     * main task runs and would otherwise mark the panel as updated constantly.
+     */
     function compareSessionStatuses(previous, snapshot) {
       const next = new Map()
       let changed = false
@@ -3383,6 +3387,7 @@ window.__ModuleLoader__.load({
         const current = new Map()
         for (const session of server.sessions) {
           if (session.id === '') continue
+          if (session.isSubagent === true) continue
           const before = old?.get(session.id)
           if (session.status === 'unknown' || session.status === 'unreachable') {
             if (before !== undefined) current.set(session.id, before)

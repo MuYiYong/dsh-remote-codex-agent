@@ -7,7 +7,7 @@
 - **发现会话**：Host 侧通过 `ssh` 连接每台服务器，优先只读查询 `${CODEX_HOME:-~/.codex}/state_5.sqlite` 的 `threads` 表；`sqlite3` 不可用时先尝试 Python 标准库 sqlite3（只读），最后回退到解析 `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl` 的 `session_meta`。JSONL 回退会按 mtime 倒序取最近文件，避免旧会话占满上限而漏掉正在运行的任务。
 - **定位运行终端**：自动枚举远端全部 tmux 会话与窗格，用 `pane_title` 与会话标题/工作目录匹配；匹配不到时，检查 `pane_pid` 进程树中的 `codex` 进程及其工作目录。同一窗格中的主会话与子代理共享 cwd 时，优先定位 `thread_source=user` 的主任务。无需手工填写 tmux 会话名。
 - **实时状态**：对已定位的窗格执行 `tmux pipe-pane -Oo`，把输出复制到远端 FIFO；Host 侧通过 SSH 长连接读取并解析 Codex CLI 0.163.0+ 的 OSC 7501 状态序列（`app=codex` + `state=idle|working|blocked|done|error|clear`），`blocked` 时额外解析 `kind` 与 base64 编码的 `msg`。
-- **侧栏更新提示**：离开 Codex Agent 面板后，已有会话的已知状态发生变化时，侧栏标题旁显示「· 有更新」；打开面板即清除。
+- **侧栏更新提示**：离开 Codex Agent 面板后，已有**主任务**的已知状态发生变化时，侧栏标题旁显示「· 有更新」；打开面板即清除。子代理的状态变化不触发提示。
 - **在 iTerm2 中查看**：本机 macOS Desktop 安装 iTerm2，且 tmux 位置可用时，点击「查看」会交互式连接当前 tmux 会话，可直接输入；不主动切换原有窗格、不踢出已有客户端。iTerm2 已运行时，优先在最前面的普通窗口新开标签页；未运行、只剩热键窗口或该窗口拒绝新标签页时才新建窗口。tmux 3.2+ 用 `-f ignore-size` 避免改变其他客户端看到的窗口大小，旧版回退为普通 attach。首次使用可能需要授权 macOS 自动化。标签页或窗口打开后，SSH 登录及连接结果仍以 iTerm2 中的输出为准。
 - **复制连接命令**：原有 SSH + tmux 命令保留为备用操作；不能用 iTerm2 查看时，仍显示「复制连接命令」。
 - **设置**：在 **设置 → Codex Agent** 卡片中维护服务器列表（名称 + SSH 别名或 `user@host`，端口可选）、展示天数（1–30，默认 3）与轮询间隔（默认 2 秒）。该卡片与“Agent 预设”设置页并列；当前 DSH 版本没有 `agent-presets.settings` 扩展槽位，因此在设置导航中作为独立页面呈现。

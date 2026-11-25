@@ -255,6 +255,24 @@ test('sidebar latches real background status changes and acknowledges on opening
   assert.equal(f.label(), undefined)
 })
 
+test('sidebar follows the main agent and ignores subagent status changes', async () => {
+  const subagent = (id, status) => ({ ...item(id, status), isSubagent: true, parentThreadId: '1' })
+  const f = fixture()
+  await f.reply(snapshot([item('1', 'working'), subagent('9', 'idle')]))
+  assert.equal(f.label(), 'panel')
+  f.tick()
+  await f.reply(snapshot([item('1', 'working'), subagent('9', 'working')]))
+  assert.equal(f.label(), 'panel', 'a subagent status change is not an update')
+  f.tick()
+  await f.reply(snapshot([item('1', 'working'), subagent('9', 'blocked')]))
+  assert.equal(f.label(), 'panel', 'subagent progress keeps the badge off')
+  f.tick()
+  await f.reply(snapshot([item('1', 'blocked'), subagent('9', 'idle')]))
+  assert.equal(f.label(), 'panelUnread', 'the main agent status change latches the badge')
+  f.dispose()
+  assert.equal(f.timers.size, 0)
+})
+
 test('disposal aborts an in-flight snapshot and ignores a late response', async () => {
   const f = fixture()
   f.dispose()

@@ -1,6 +1,6 @@
 {
   "name": "dsh-codex-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "Monitor and interact with Codex CLI sessions on remote servers from a DSH sidebar panel: tmux discovery, live status, and an interactive iTerm2 view.",
