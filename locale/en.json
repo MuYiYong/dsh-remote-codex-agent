@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Codex Agent",
+    "description": "Monitors Codex CLI sessions on remote Ubuntu servers, shows their live status, and copies a ready-to-run SSH + tmux attach command.",
+    "detail": "docs/DETAIL.md"
+  }
+}

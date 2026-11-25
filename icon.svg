@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Codex Agent">
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#1c2230"/>
+  <rect x="4.75" y="4.75" width="54.5" height="54.5" rx="13.25" fill="none" stroke="#3d6de0" stroke-width="1.5"/>
+  <path d="M16 21h13" stroke="#7aa2ff" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M16 32h9" stroke="#7aa2ff" stroke-width="3.5" stroke-linecap="round" opacity="0.72"/>
+  <path d="M16 43h7" stroke="#7aa2ff" stroke-width="3.5" stroke-linecap="round" opacity="0.46"/>
+  <path d="M35 20l10 12-10 12" fill="none" stroke="#e8ecf5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="51" cy="15" r="4.5" fill="#3fbf72" stroke="#1c2230" stroke-width="1.5"/>
+  <circle cx="51" cy="49" r="3.5" fill="#e2a63d" stroke="#1c2230" stroke-width="1.5"/>
+</svg>

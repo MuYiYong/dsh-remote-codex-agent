@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Codex Agent",
+    "description": "监控远端 Ubuntu 服务器上运行的 Codex CLI 会话，展示实时状态，并复制可直接执行的 SSH + tmux attach 命令。",
+    "detail": "docs/DETAIL.md"
+  }
+}
